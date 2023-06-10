@@ -3,8 +3,12 @@
 .color3 { #88c425 };
 .color4 { #bef202 };
 .color5 { #eafde6 }; */
-.ButtonL{
+.divNavBar{
     background-color: #1b676b;
     color: #eafde6;
-    font-size: 42px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin-bottom: 15px;
 }

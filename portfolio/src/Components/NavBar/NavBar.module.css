@@ -12,3 +12,14 @@
     justify-content: left;
     margin-bottom: 15px;
 }
+.imageNavBar{
+    margin-right: 20px;
+}
+.componentNavBar{
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 28px;
+}
+.linkNavBar{
+    color: #eafde6;
+}

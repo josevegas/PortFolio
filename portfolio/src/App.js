@@ -1,17 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route } from "react-router-dom"
+import { BrowserRouter,Route,Routes,useLocation,useNavigate } from "react-router-dom"
 import Landing from './Components/Landing/Landing';
 import NavBar from './Components/NavBar/NavBar';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
-   return (
-    <div className="App">
-      <NavBar />
-      <BrowserRouter>
-        <Route path="/" element={<Landing />} />
-      </BrowserRouter>
-    </div>
+  // const location=useLocation();
+  // const navigate=useNavigate();
+  // navigate='/';
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

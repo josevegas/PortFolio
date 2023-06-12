@@ -1,20 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter,Route,Routes,useLocation,useNavigate } from "react-router-dom"
+import { BrowserRouter,Route,Routes,useLocation,useNavigate } from "react-router-dom";
+import { useState,useEffect } from 'react';
 import Landing from './Components/Landing/Landing';
 import NavBar from './Components/NavBar/NavBar';
+import Home from './Components/Home/Home';
+import AboutMe from './Components/AboutMe/AboutMe';
+import MailMe from './Components/MailMe/MailMe';
+import Proyects from './Components/Proyects/Proyects';
 import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
+  const [access,setAccess]=useState(false);
   // const location=useLocation();
   // const navigate=useNavigate();
   // navigate='/';
   return (
     <BrowserRouter>
       <div className="App">
-        <NavBar />
+        {access?<NavBar setAccess={setAccess}/>:null}
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Landing setAccess={setAccess}/>} />
+          <Route element={<ProtectedRoute isAllowed={access}/>}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/aboutme" element={<AboutMe />} />
+            <Route path="/proyects" element={<Proyects />} />
+            <Route path="/mailme" element={<MailMe />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>

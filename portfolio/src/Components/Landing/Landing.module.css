@@ -7,4 +7,11 @@
     background-color: #1b676b;
     color: #eafde6;
     font-size: 42px;
+    border-radius: 10px;
+}
+.bodyL{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10%;
 }

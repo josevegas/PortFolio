@@ -23,3 +23,16 @@
 .linkNavBar{
     color: #eafde6;
 }
+.linkNavBar:hover{
+    color: #bef202;
+}
+.buttonNavBar{
+    background-color: #519548;
+    color: #eafde6;
+    border-radius: 10px;
+    font-size: 28px;
+    margin-top: 34%;
+}
+.buttonNavBar:hover{
+    color: #bef202;
+}

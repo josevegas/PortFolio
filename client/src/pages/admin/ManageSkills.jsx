@@ -85,7 +85,7 @@ const ManageSkills = () => {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
                     <button onClick={() => handleOpenModal(skill)} className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"><Pencil size={16} /></button>
-                    <button onClick={async () => { if(window.confirm('¿Eliminar?')) { await api.delete(`/admin/skills/${skill._id}`); fetchSkills(); } }} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"><Trash2 size={16} /></button>
+                    <button onClick={async () => { if (window.confirm('¿Eliminar?')) { await api.delete(`/admin/skills/${skill._id}`); fetchSkills(); } }} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"><Trash2 size={16} /></button>
                   </div>
                 </td>
               </tr>
@@ -102,21 +102,30 @@ const ManageSkills = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-sm">Nombre</label>
-                  <input type="text" required className="admin-input" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                  <input type="text" required className="admin-input" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Categoría</label>
-                  <input type="text" required className="admin-input" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} />
+                  <select
+                    required
+                    className="admin-input"
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  >
+                    <option value="Frontend">Frontend</option>
+                    <option value="Backend">Backend</option>
+                    <option value="Herramientas">Herramientas</option>
+                  </select>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-sm">Ícono (Lucide Name)</label>
-                  <input type="text" className="admin-input" value={formData.icon} onChange={(e) => setFormData({...formData, icon: e.target.value})} />
+                  <input type="text" className="admin-input" value={formData.icon} onChange={(e) => setFormData({ ...formData, icon: e.target.value })} />
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm">Orden</label>
-                  <input type="number" className="admin-input" value={formData.order} onChange={(e) => setFormData({...formData, order: parseInt(e.target.value)})} />
+                  <input type="number" className="admin-input" value={formData.order} onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })} />
                 </div>
               </div>
               <div className="flex justify-end gap-3 mt-8">

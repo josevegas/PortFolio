@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  FolderKanban, 
-  Wrench, 
-  Share2, 
-  Info, 
-  Mail, 
-  LogOut, 
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Wrench,
+  Share2,
+  Info,
+  Mail,
+  LogOut,
   Bell,
   Menu,
   X,
@@ -57,11 +57,11 @@ const AdminDashboard = () => {
     { path: 'skills', label: 'Habilidades', icon: Wrench },
     { path: 'socials', label: 'Redes Sociales', icon: Share2 },
     { path: 'info', label: 'Información', icon: Info },
-    { 
-      path: 'messages', 
-      label: 'Mensajes', 
-      icon: Mail, 
-      badge: unreadCount 
+    {
+      path: 'messages',
+      label: 'Mensajes',
+      icon: Mail,
+      badge: unreadCount
     },
   ];
 
@@ -80,10 +80,11 @@ const AdminDashboard = () => {
           <nav className="flex-1 px-4 space-y-2 mt-4">
             {navItems.map((item) => {
               const isActive = location.pathname === `/admin/dashboard${item.path ? '/' + item.path : ''}`;
+              const toPath = item.path == '' ? '/admin/dashboard' : `/admin/dashboard/${item.path}`;
               return (
                 <Link
                   key={item.path}
-                  to={item.path}
+                  to={toPath}
                   className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400'}`}
                 >
                   <div className="flex items-center gap-3">
@@ -101,14 +102,14 @@ const AdminDashboard = () => {
           </nav>
 
           <div className="p-4 border-t border-gray-200 dark:border-gray-800 space-y-2">
-             <button 
+            <button
               onClick={toggleTheme}
               className="flex items-center gap-3 w-full px-4 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all"
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               <span className="font-medium">{isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}</span>
             </button>
-            <button 
+            <button
               onClick={handleLogout}
               className="flex items-center gap-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all"
             >
@@ -123,27 +124,27 @@ const AdminDashboard = () => {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Header */}
         <header className="bg-white dark:bg-dark-card border-b border-gray-200 dark:border-gray-800 h-16 flex items-center justify-between px-4 lg:hidden">
-           <button onClick={() => setIsSidebarOpen(true)}>
-             <Menu className="w-6 h-6 text-gray-600" />
-           </button>
-           <h1 className="text-lg font-bold">Admin</h1>
-           <div className="relative">
-             <Mail className="w-6 h-6 text-gray-600" />
-             {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full">{unreadCount}</span>}
-           </div>
+          <button onClick={() => setIsSidebarOpen(true)}>
+            <Menu className="w-6 h-6 text-gray-600" />
+          </button>
+          <h1 className="text-lg font-bold">Admin</h1>
+          <div className="relative">
+            <Mail className="w-6 h-6 text-gray-600" />
+            {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full">{unreadCount}</span>}
+          </div>
         </header>
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8">
           <Routes>
             <Route path="/" element={<div className="bg-white dark:bg-dark-card p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
-               <h2 className="text-2xl font-bold mb-4">Bienvenido, {localStorage.getItem('user')}</h2>
-               <p className="text-gray-600 dark:text-gray-400">Selecciona una opción del menú para comenzar a gestionar tu portfolio.</p>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  <div className="p-6 bg-primary/5 rounded-2xl border border-primary/10">
-                    <p className="text-primary font-bold text-3xl">{unreadCount}</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">Mensajes no leídos</p>
-                  </div>
-               </div>
+              <h2 className="text-2xl font-bold mb-4">Bienvenido, {localStorage.getItem('user')}</h2>
+              <p className="text-gray-600 dark:text-gray-400">Selecciona una opción del menú para comenzar a gestionar tu portfolio.</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="p-6 bg-primary/5 rounded-2xl border border-primary/10">
+                  <p className="text-primary font-bold text-3xl">{unreadCount}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">Mensajes no leídos</p>
+                </div>
+              </div>
             </div>} />
             <Route path="/projects" element={<ManageProjects />} />
             <Route path="/skills" element={<ManageSkills />} />

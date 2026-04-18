@@ -5,6 +5,31 @@ const Social = require('../models/Social');
 const Info = require('../models/Info');
 const Message = require('../models/Message');
 const jwt = require('jsonwebtoken');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+
+// Configuración del cliente S3 compatible con Cloudflare R2
+const s3Client = new S3Client({
+  endpoint: process.env.S3_API,
+  credentials: {
+    accessKeyId: process.env.CLOUD_API,
+    secretAccessKey: process.env.CLOUD_API_SECRET,
+  },
+  region: 'auto',
+});
+const BUCKET_NAME = process.env.R2_BUCKET_NAME;
+// Función auxiliar para subir archivos a R2
+const uploadToR2 = async (file) => {
+  const key = `projects/${Date.now()}-${file.originalname.replace(/\s/g, '_')}`;
+  const command = new PutObjectCommand({
+    Bucket: BUCKET_NAME,
+    Key: key,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  });
+  await s3Client.send(command);
+  return `${process.env.S3_API}/${BUCKET_NAME}/${key}`;
+};
+
 
 // Auth
 exports.login = async (req, res) => {
@@ -35,7 +60,11 @@ exports.getAdminProjects = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
-    const project = new Project(req.body);
+    const projectData = { ...req.body };
+    if (req.file) {
+      projectData.image = await uploadToR2(req.file);
+    }
+    const project = new Project(projectData);
     await project.save();
     res.status(201).json(project);
   } catch (error) {

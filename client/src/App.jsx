@@ -32,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        
+
         <Route element={<AdminRoute />}>
           <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
         </Route>

@@ -74,7 +74,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-bold tracking-wider">Email</div>
-                  <div className="text-gray-900 dark:text-white font-medium">hola@josevegas.dev</div>
+                  <div className="text-gray-900 dark:text-white font-medium">josevegas.marquez@gmail.com</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -83,7 +83,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 uppercase font-bold tracking-wider">Ubicación</div>
-                  <div className="text-gray-900 dark:text-white font-medium">Remote / World</div>
+                  <div className="text-gray-900 dark:text-white font-medium">Remote / Piura, Perú</div>
                 </div>
               </div>
             </div>

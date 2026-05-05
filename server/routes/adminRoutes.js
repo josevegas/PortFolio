@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
 const auth = require('../middleware/auth');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Auth
 router.post('/login', adminController.login);
@@ -11,8 +13,8 @@ router.use(auth);
 
 // Projects
 router.get('/projects', adminController.getAdminProjects);
-router.post('/projects', adminController.createProject);
-router.put('/projects/:id', adminController.updateProject);
+router.post('/projects', upload.single('image'), adminController.createProject);
+router.put('/projects/:id', upload.single('image'), adminController.updateProject);
 router.delete('/projects/:id', adminController.deleteProject);
 
 // Skills
@@ -33,5 +35,8 @@ router.put('/info/:id', adminController.updateInfo);
 router.get('/messages', adminController.getMessages);
 router.patch('/messages/:id', adminController.updateMessageStatus);
 router.delete('/messages/:id', adminController.deleteMessage);
+
+// Images
+router.get('/images/signed-url', adminController.getImageSignedUrl);
 
 module.exports = router;

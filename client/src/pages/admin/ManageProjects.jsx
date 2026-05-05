@@ -12,6 +12,7 @@ import {
   ChevronUp,
   ChevronDown
 } from 'lucide-react';
+import ImageUpload from '../../components/admin/ImageUpload';
 
 const ManageProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -27,6 +28,7 @@ const ManageProjects = () => {
     repoUrl: '',
     order: 0
   });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const fetchProjects = async () => {
     try {
@@ -68,21 +70,32 @@ const ManageProjects = () => {
         order: projects.length
       });
     }
+    setSelectedFile(null);
     setIsModalOpen(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = {
-      ...formData,
-      technologies: formData.technologies.split(',').map(s => s.trim()).filter(s => s !== '')
-    };
+    
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('title', formData.title);
+    formDataToSubmit.append('description', formData.description);
+    formDataToSubmit.append('order', formData.order);
+    formDataToSubmit.append('demoUrl', formData.demoUrl);
+    formDataToSubmit.append('repoUrl', formData.repoUrl);
+    formDataToSubmit.append('technologies', JSON.stringify(formData.technologies.split(',').map(s => s.trim()).filter(s => s !== '')));
+    
+    if (selectedFile) {
+      formDataToSubmit.append('image', selectedFile);
+    } else {
+      formDataToSubmit.append('image', formData.image);
+    }
 
     try {
       if (editingId) {
-        await api.put(`/admin/projects/${editingId}`, payload);
+        await api.put(`/admin/projects/${editingId}`, formDataToSubmit);
       } else {
-        await api.post('/admin/projects', payload);
+        await api.post('/admin/projects', formDataToSubmit);
       }
       fetchProjects();
       setIsModalOpen(false);
@@ -196,20 +209,15 @@ const ManageProjects = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Imagen URL</label>
-                <div className="flex gap-4">
-                  <input 
-                    type="url" required
-                    className="admin-input"
-                    value={formData.image}
-                    onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  />
-                  {formData.image && (
-                    <div className="w-12 h-12 rounded border border-gray-200 overflow-hidden shrink-0">
-                      <img src={formData.image} alt="prev" className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                </div>
+                <label className="text-sm font-medium">Imagen del Proyecto</label>
+                <ImageUpload 
+                  value={formData.image} 
+                  onChange={(file) => setSelectedFile(file)}
+                  onClear={() => {
+                    setSelectedFile(null);
+                    setFormData({ ...formData, image: '' });
+                  }}
+                />
               </div>
 
               <div className="space-y-2">

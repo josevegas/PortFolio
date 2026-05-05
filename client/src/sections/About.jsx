@@ -20,9 +20,9 @@ const About = () => {
   }, []);
 
   const stats = [
-    { label: 'Años de Experiencia', value: '3+' },
-    { label: 'Proyectos Completados', value: '20+' },
-    { label: 'Clientes Felices', value: '15+' },
+    { label: 'Años de Experiencia', value: '2+' },
+    { label: 'Proyectos Completados', value: '10+' },
+    { label: 'Clientes Felices', value: '4+' },
   ];
 
   const values = [
@@ -35,7 +35,7 @@ const About = () => {
     <section id="about" className="py-20 bg-gray-50 dark:bg-dark-bg/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="section-title text-gray-900 dark:text-white">Sobre Mí</h2>
-        
+
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -51,7 +51,7 @@ const About = () => {
                 <p>Cargando información...</p>
               )}
             </div>
-            
+
             <div className="grid grid-cols-3 gap-4">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center p-4 rounded-xl bg-white dark:bg-dark-card shadow-sm border border-gray-100 dark:border-gray-800">

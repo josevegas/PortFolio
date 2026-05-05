@@ -5,30 +5,7 @@ const Social = require('../models/Social');
 const Info = require('../models/Info');
 const Message = require('../models/Message');
 const jwt = require('jsonwebtoken');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-
-// Configuración del cliente S3 compatible con Cloudflare R2
-const s3Client = new S3Client({
-  endpoint: process.env.S3_API,
-  credentials: {
-    accessKeyId: process.env.CLOUD_API,
-    secretAccessKey: process.env.CLOUD_API_SECRET,
-  },
-  region: 'auto',
-});
-const BUCKET_NAME = process.env.R2_BUCKET_NAME;
-// Función auxiliar para subir archivos a R2
-const uploadToR2 = async (file) => {
-  const key = `projects/${Date.now()}-${file.originalname.replace(/\s/g, '_')}`;
-  const command = new PutObjectCommand({
-    Bucket: BUCKET_NAME,
-    Key: key,
-    Body: file.buffer,
-    ContentType: file.mimetype,
-  });
-  await s3Client.send(command);
-  return `${process.env.S3_API}/${BUCKET_NAME}/${key}`;
-};
+const imageService = require('../services/imageService');
 
 
 // Auth
@@ -60,21 +37,53 @@ exports.getAdminProjects = async (req, res) => {
 
 exports.createProject = async (req, res) => {
   try {
+    console.log('Create Project Body:', req.body);
+    console.log('Create Project File:', req.file);
     const projectData = { ...req.body };
     if (req.file) {
-      projectData.image = await uploadToR2(req.file);
+      const { url } = await imageService.uploadImage(req.file.buffer, req.file.originalname, req.file.mimetype, 'projects');
+      projectData.image = url;
     }
+    
+    // Si viene de FormData, tecnologías podría ser un string JSON o una lista separada por comas
+    if (typeof projectData.technologies === 'string') {
+      try {
+        projectData.technologies = JSON.parse(projectData.technologies);
+      } catch (e) {
+        projectData.technologies = projectData.technologies.split(',').map(s => s.trim()).filter(s => s !== '');
+      }
+    }
+
     const project = new Project(projectData);
     await project.save();
     res.status(201).json(project);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error('Error in createProject:', error);
+    res.status(400).json({ 
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
+    });
   }
 };
 
 exports.updateProject = async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const projectData = { ...req.body };
+    if (req.file) {
+      const { url } = await imageService.uploadImage(req.file.buffer, req.file.originalname, req.file.mimetype, 'projects');
+      projectData.image = url;
+    }
+
+    // Si viene de FormData, tecnologías podría ser un string JSON o una lista separada por comas
+    if (typeof projectData.technologies === 'string') {
+      try {
+        projectData.technologies = JSON.parse(projectData.technologies);
+      } catch (e) {
+        projectData.technologies = projectData.technologies.split(',').map(s => s.trim()).filter(s => s !== '');
+      }
+    }
+
+    const project = await Project.findByIdAndUpdate(req.params.id, projectData, { new: true });
     res.json(project);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -197,5 +206,16 @@ exports.deleteMessage = async (req, res) => {
     res.json({ message: 'Mensaje eliminado' });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getImageSignedUrl = async (req, res) => {
+  try {
+    const { key } = req.query;
+    if (!key) return res.status(400).json({ message: 'Se requiere el key de la imagen' });
+    const url = await imageService.getSignedImageUrl(key);
+    res.json({ url });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Github, Linkedin, Save, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Save, ExternalLink, AlertCircle } from 'lucide-react';
 
 const ManageSocials = () => {
   const [socials, setSocials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState(null);
 
   const fetchSocials = async () => {
     try {
@@ -25,7 +26,10 @@ const ManageSocials = () => {
     try {
       await api.put(`/admin/socials/${id}`, { url });
       setSocials(socials.map(s => s._id === id ? { ...s, url } : s));
+      setMessage({ type: 'success', text: 'Red social actualizada correctamente' });
+      setTimeout(() => setMessage(null), 3000);
     } catch (error) {
+      setMessage({ type: 'error', text: 'Error al actualizar red social' });
       console.error('Error updating social', error);
     }
   };
@@ -34,6 +38,12 @@ const ManageSocials = () => {
     <div className="space-y-6 max-w-2xl">
       <h2 className="text-2xl font-bold">Redes Sociales</h2>
       <p className="text-gray-500 text-sm">Configura los enlaces a tus perfiles profesionales. Solo se permiten GitHub y LinkedIn.</p>
+
+      {message && (
+        <div className={`p-4 rounded-xl flex items-center gap-2 ${message.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+          <AlertCircle size={18} /> {message.text}
+        </div>
+      )}
 
       <div className="space-y-4">
         {loading ? <p>Cargando...</p> : socials.map((social) => (

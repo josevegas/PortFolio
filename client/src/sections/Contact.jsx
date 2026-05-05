@@ -12,7 +12,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const { data } = await api.get('/info');
+        const { data } = await api.get('/api/info');
         const infoObj = data.reduce((acc, item) => {
           acc[item.key] = item.value;
           return acc;
@@ -41,9 +41,9 @@ const Contact = () => {
         setFormData({ name: '', email: '', message: '' });
       }
     } catch (err) {
-      setStatus({ 
-        type: 'error', 
-        message: err.response?.data?.message || 'Algo salió mal. Por favor, intenta de nuevo.' 
+      setStatus({
+        type: 'error',
+        message: err.response?.data?.message || 'Algo salió mal. Por favor, intenta de nuevo.'
       });
     } finally {
       setLoading(false);
@@ -54,7 +54,7 @@ const Contact = () => {
     <section id="contact" className="py-20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <h2 className="section-title text-gray-900 dark:text-white">Contacto</h2>
-        
+
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -66,7 +66,7 @@ const Contact = () => {
             <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
               ¿Tienes una idea en mente o simplemente quieres decir hola? Estaré encantado de escucharte y ver cómo podemos trabajar juntos.
             </p>
-            
+
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-dark-card shadow-md flex items-center justify-center border border-gray-100 dark:border-gray-800">

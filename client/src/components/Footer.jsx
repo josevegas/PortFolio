@@ -12,8 +12,8 @@ const Footer = () => {
     const fetchData = async () => {
       try {
         const [socRes, infoRes] = await Promise.all([
-          api.get('/socials'),
-          api.get('/info')
+          api.get('/api/socials'),
+          api.get('/api/info')
         ]);
         setSocials(socRes.data);
         const infoObj = infoRes.data.reduce((acc, item) => {
@@ -55,10 +55,10 @@ const Footer = () => {
 
           <div className="flex gap-4">
             {socials.map((social) => (
-              <a 
-                key={social._id} 
-                href={social.url} 
-                target="_blank" 
+              <a
+                key={social._id}
+                href={social.url}
+                target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white transition-all shadow-sm"
               >

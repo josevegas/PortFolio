@@ -9,7 +9,7 @@ const ManageSocials = () => {
 
   const fetchSocials = async () => {
     try {
-      const { data } = await api.get('/admin/socials');
+      const { data } = await api.get('/api/admin/socials');
       setSocials(data);
     } catch (error) {
       console.error('Error fetching socials', error);
@@ -24,7 +24,7 @@ const ManageSocials = () => {
 
   const handleUpdate = async (id, url) => {
     try {
-      await api.put(`/admin/socials/${id}`, { url });
+      await api.put(`/api/admin/socials/${id}`, { url });
       setSocials(socials.map(s => s._id === id ? { ...s, url } : s));
       setMessage({ type: 'success', text: 'Red social actualizada correctamente' });
       setTimeout(() => setMessage(null), 3000);
@@ -60,13 +60,13 @@ const ManageSocials = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <input 
+              <input
                 type="url"
                 className="admin-input flex-1"
                 value={social.url}
-                onChange={(e) => setSocials(socials.map(s => s._id === social._id ? {...s, url: e.target.value} : s))}
+                onChange={(e) => setSocials(socials.map(s => s._id === social._id ? { ...s, url: e.target.value } : s))}
               />
-              <button 
+              <button
                 onClick={() => handleUpdate(social._id, social.url)}
                 className="bg-primary text-white px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-primary-dark transition-all"
               >

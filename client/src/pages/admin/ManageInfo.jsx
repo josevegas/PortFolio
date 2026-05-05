@@ -11,7 +11,7 @@ const ManageInfo = () => {
   const fetchInfo = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('/admin/info');
+      const { data } = await api.get('/api/admin/info');
       setInfoItems(data);
     } catch (error) {
       console.error('Error fetching info', error);
@@ -27,7 +27,7 @@ const ManageInfo = () => {
   const handleUpdate = async (id, value) => {
     try {
       setSaving(true);
-      await api.put(`/admin/info/${id}`, { value });
+      await api.put(`/api/admin/info/${id}`, { value });
       setMessage({ type: 'success', text: 'Información actualizada correctamente' });
       setTimeout(() => setMessage(null), 3000);
     } catch (error) {
@@ -61,22 +61,22 @@ const ManageInfo = () => {
           <div key={item._id} className="bg-white dark:bg-dark-card p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-bold text-gray-400 capitalize">{item.key.replace(/_/g, ' ')}</label>
-              <button 
+              <button
                 onClick={() => handleUpdate(item._id, item.value)}
                 className="text-primary hover:bg-primary/5 px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2"
               >
                 <Save size={14} /> Guardar
               </button>
             </div>
-            
+
             {item.type === 'textarea' ? (
-              <textarea 
+              <textarea
                 className="admin-input min-h-[120px] py-3"
                 value={item.value}
                 onChange={(e) => handleChange(item._id, e.target.value)}
               />
             ) : (
-              <input 
+              <input
                 type={item.type === 'url' ? 'url' : 'text'}
                 className="admin-input"
                 value={item.value}

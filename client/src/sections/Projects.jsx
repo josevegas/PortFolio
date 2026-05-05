@@ -11,7 +11,7 @@ const Projects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await api.get('/projects');
+        const response = await api.get('/api/projects');
         setProjects(response.data);
       } catch (err) {
         setError('No se pudieron cargar los proyectos. Por favor, inténtalo de nuevo más tarde.');
@@ -49,7 +49,7 @@ const Projects = () => {
     <section id="projects" className="py-20 bg-gray-50 dark:bg-dark-bg/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="section-title text-gray-900 dark:text-white">Mis Proyectos</h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
@@ -79,7 +79,7 @@ const Projects = () => {
                   )}
                 </div>
               </div>
-              
+
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech, i) => (
@@ -95,16 +95,16 @@ const Projects = () => {
                   {project.description}
                 </p>
                 <div className="flex items-center justify-between mt-auto">
-                   {project.demoUrl && (
-                     <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm font-semibold flex items-center gap-1">
-                       Ver Demo <ExternalLink size={14} />
-                     </a>
-                   )}
-                   {project.repoUrl && (
-                     <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-                       <Github size={18} />
-                     </a>
-                   )}
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm font-semibold flex items-center gap-1">
+                      Ver Demo <ExternalLink size={14} />
+                    </a>
+                  )}
+                  {project.repoUrl && (
+                    <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      <Github size={18} />
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

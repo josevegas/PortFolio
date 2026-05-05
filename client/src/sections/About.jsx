@@ -9,7 +9,7 @@ const About = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        const { data } = await api.get('/info');
+        const { data } = await api.get('/api/info');
         const item = data.find(i => i.key === 'about_text');
         if (item) setAboutText(item.value);
       } catch (error) {

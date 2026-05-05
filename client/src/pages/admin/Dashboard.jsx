@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   const fetchUnreadCount = async () => {
     try {
-      const { data } = await api.get('/admin/messages');
+      const { data } = await api.get('/api/admin/messages');
       const unread = data.filter(m => m.status === 'unread').length;
       setUnreadCount(unread);
     } catch (error) {

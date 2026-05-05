@@ -9,7 +9,7 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const { data } = await api.get('/skills');
+        const { data } = await api.get('/api/skills');
         setSkills(data);
       } catch (error) {
         console.error('Error fetching skills', error);
@@ -33,7 +33,7 @@ const Skills = () => {
     <section id="skills" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="section-title text-gray-900 dark:text-white">Mis Habilidades</h2>
-        
+
         <div className="grid md:grid-cols-3 gap-8">
           {Object.entries(categories).map(([title, categorySkills], catIndex) => (
             <motion.div
@@ -48,7 +48,7 @@ const Skills = () => {
                 {title}
               </h3>
               <div className="flex flex-wrap gap-3">
-                {categorySkills.sort((a,b) => a.order - b.order).map((skill, skillIndex) => (
+                {categorySkills.sort((a, b) => a.order - b.order).map((skill, skillIndex) => (
                   <span
                     key={skillIndex}
                     className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-all duration-300 cursor-default"

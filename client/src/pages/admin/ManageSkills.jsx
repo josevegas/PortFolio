@@ -16,7 +16,7 @@ const ManageSkills = () => {
 
   const fetchSkills = async () => {
     try {
-      const { data } = await api.get('/admin/skills');
+      const { data } = await api.get('/api/admin/skills');
       setSkills(data);
     } catch (error) {
       console.error('Error fetching skills', error);
@@ -42,9 +42,9 @@ const ManageSkills = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await api.put(`/admin/skills/${editingId}`, formData);
+        await api.put(`/api/admin/skills/${editingId}`, formData);
       } else {
-        await api.post('/admin/skills', formData);
+        await api.post('/api/admin/skills', formData);
       }
       fetchSkills();
       setIsModalOpen(false);

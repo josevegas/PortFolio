@@ -19,7 +19,7 @@ const Navbar = () => {
 
     const fetchInfo = async () => {
       try {
-        const { data } = await api.get('/info');
+        const { data } = await api.get('/api/info');
         const item = data.find(i => i.key === 'hero_name');
         if (item) setName(item.value.split(' ')[0]);
       } catch (error) {
@@ -48,7 +48,7 @@ const Navbar = () => {
               {name}<span className="text-secondary">.</span>
             </h1>
           </div>
-          
+
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
               {navLinks.map((link) => (
@@ -79,7 +79,7 @@ const Navbar = () => {
           </div>
 
           <div className="md:hidden flex items-center gap-4">
-             <button
+            <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >

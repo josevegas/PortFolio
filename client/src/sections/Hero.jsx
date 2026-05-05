@@ -14,15 +14,15 @@ const Hero = () => {
     const fetchData = async () => {
       try {
         const [infoRes, socialRes] = await Promise.all([
-          api.get('/info'),
-          api.get('/socials')
+          api.get('/api/info'),
+          api.get('/api/socials')
         ]);
-        
+
         const infoObj = infoRes.data.reduce((acc, item) => {
           acc[item.key] = item.value;
           return acc;
         }, {});
-        
+
         setInfo(infoObj);
         setSocials(socialRes.data);
       } catch (error) {
@@ -88,10 +88,10 @@ const Hero = () => {
 
           <div className="flex items-center justify-center gap-6">
             {socials.map((social) => (
-              <a 
-                key={social._id} 
-                href={social.url} 
-                target="_blank" 
+              <a
+                key={social._id}
+                href={social.url}
+                target="_blank"
                 rel="noreferrer"
                 className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors p-2 bg-gray-100 dark:bg-gray-800 rounded-full"
               >

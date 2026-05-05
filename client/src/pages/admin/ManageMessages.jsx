@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { 
-  Mail, 
-  Trash2, 
-  Eye, 
-  Clock, 
-  CheckCircle, 
+import {
+  Mail,
+  Trash2,
+  Eye,
+  Clock,
+  CheckCircle,
   XSquare,
   X,
   User,
@@ -20,7 +20,7 @@ const ManageMessages = ({ onUpdate }) => {
   const fetchMessages = async () => {
     try {
       setLoading(true);
-      const { data } = await api.get('/admin/messages');
+      const { data } = await api.get('/api/admin/messages');
       setMessages(data);
     } catch (error) {
       console.error('Error fetching messages', error);
@@ -35,7 +35,7 @@ const ManageMessages = ({ onUpdate }) => {
 
   const updateStatus = async (id, status) => {
     try {
-      await api.patch(`/admin/messages/${id}`, { status });
+      await api.patch(`/api/admin/messages/${id}`, { status });
       fetchMessages();
       if (onUpdate) onUpdate(); // Update unread badge in parent
       if (selectedMessage) {
@@ -49,7 +49,7 @@ const ManageMessages = ({ onUpdate }) => {
   const deleteMessage = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar este mensaje?')) return;
     try {
-      await api.delete(`/admin/messages/${id}`);
+      await api.delete(`/api/admin/messages/${id}`);
       fetchMessages();
       if (onUpdate) onUpdate();
       setSelectedMessage(null);
@@ -101,8 +101,8 @@ const ManageMessages = ({ onUpdate }) => {
               ) : messages.length === 0 ? (
                 <tr><td colSpan="4" className="px-6 py-8 text-center">No hay mensajes.</td></tr>
               ) : messages.map((msg) => (
-                <tr 
-                  key={msg._id} 
+                <tr
+                  key={msg._id}
                   className={`hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors cursor-pointer ${msg.status === 'unread' ? 'bg-yellow-50/30 dark:bg-yellow-900/5' : ''}`}
                   onClick={() => handleOpenMessage(msg)}
                 >
@@ -145,7 +145,7 @@ const ManageMessages = ({ onUpdate }) => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             <div className="p-8 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
@@ -178,14 +178,14 @@ const ManageMessages = ({ onUpdate }) => {
 
               <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-2">
-                  <button 
+                  <button
                     onClick={() => updateStatus(selectedMessage._id, 'attended')}
                     disabled={selectedMessage.status === 'attended'}
                     className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors font-medium text-sm disabled:opacity-50"
                   >
                     <CheckCircle className="w-4 h-4" /> Marcar Atendido
                   </button>
-                  <button 
+                  <button
                     onClick={() => updateStatus(selectedMessage._id, 'discarded')}
                     disabled={selectedMessage.status === 'discarded'}
                     className="flex items-center gap-2 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors font-medium text-sm disabled:opacity-50"
@@ -193,9 +193,9 @@ const ManageMessages = ({ onUpdate }) => {
                     <XSquare className="w-4 h-4" /> Descartar
                   </button>
                 </div>
-                <button 
-                   onClick={() => deleteMessage(selectedMessage._id)}
-                   className="text-red-500 hover:text-red-600 text-sm flex items-center gap-1"
+                <button
+                  onClick={() => deleteMessage(selectedMessage._id)}
+                  className="text-red-500 hover:text-red-600 text-sm flex items-center gap-1"
                 >
                   <Trash2 className="w-4 h-4" /> Eliminar permanente
                 </button>

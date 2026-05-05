@@ -15,7 +15,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await api.post('/admin/login', { username, password });
+      const { data } = await api.post('/api/admin/login', { username, password });
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', data.username);
       navigate('/admin/dashboard');

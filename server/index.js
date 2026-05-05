@@ -11,8 +11,17 @@ const app = express();
 connectDB();
 
 // Middleware
+const allowedOrigins = [process.env.CORS_ORIGIN, 'http://localhost:5173'].filter(Boolean);
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173'
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 app.use(express.json());
 

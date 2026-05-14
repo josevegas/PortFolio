@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, GithubIcon, LinkedinIcon, ExternalLink, Mail, Phone, MapPin, Download } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, ExternalLink, Mail, Phone, MapPin, Download } from 'lucide-react';
 import { Link } from 'react-scroll';
 import api from '../utils/api';
 import AvatarImg from '../assets/avatar.png';

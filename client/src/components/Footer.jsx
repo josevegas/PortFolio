@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GitHub, Linkedin, Heart } from 'lucide-react';
+import { Github, Linkedin, Heart } from 'lucide-react';
 import { Link } from 'react-scroll';
 import api from '../utils/api';
 
@@ -30,7 +30,7 @@ const Footer = () => {
 
   const getIcon = (platform) => {
     switch (platform.toLowerCase()) {
-      case 'github': return <GitHub size={20} />;
+      case 'github': return <Github size={20} />;
       case 'linkedin': return <Linkedin size={20} />;
       default: return null;
     }

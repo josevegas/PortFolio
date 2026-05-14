@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, GitHub, Loader2, AlertCircle } from 'lucide-react';
+import { ExternalLink, Github, Loader2, AlertCircle } from 'lucide-react';
 import api from '../utils/api';
 
 const Projects = () => {
@@ -69,7 +69,7 @@ const Projects = () => {
                 <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                   {project.repoUrl && (
                     <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white rounded-full text-gray-900 hover:bg-primary hover:text-white transition-colors">
-                      <GitHub size={20} />
+                      <Github size={20} />
                     </a>
                   )}
                   {project.demoUrl && (
@@ -102,7 +102,7 @@ const Projects = () => {
                   )}
                   {project.repoUrl && (
                     <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-                      <GitHub size={18} />
+                      <Github size={18} />
                     </a>
                   )}
                 </div>

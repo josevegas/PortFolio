@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Github, Linkedin, ExternalLink, Mail, Phone, MapPin, Download } from 'lucide-react';
+import { ChevronDown, GitHub, Linkedin, ExternalLink, Mail, Phone, MapPin, Download } from 'lucide-react';
 import { Link } from 'react-scroll';
 import api from '../utils/api';
 import AvatarImg from '../assets/avatar.png';
@@ -36,7 +36,7 @@ const Hero = () => {
 
   const getIcon = (platform) => {
     switch (platform.toLowerCase()) {
-      case 'github': return <Github size={24} />;
+      case 'github': return <GitHub size={24} />;
       case 'linkedin': return <Linkedin size={24} />;
       default: return null;
     }

@@ -93,9 +93,9 @@ const ManageProjects = () => {
 
     try {
       if (editingId) {
-        await api.put(`/admin/projects/${editingId}`, formDataToSubmit);
+        await api.put(`/api/admin/projects/${editingId}`, formDataToSubmit);
       } else {
-        await api.post('/admin/projects', formDataToSubmit);
+        await api.post('/api/admin/projects', formDataToSubmit);
       }
       fetchProjects();
       setIsModalOpen(false);
